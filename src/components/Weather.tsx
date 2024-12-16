@@ -10,7 +10,7 @@ const Weather = () => {
                     <p>Location: {weatherInfo.country}, {weatherInfo.city}</p>
                     <p>Temp: {weatherInfo.temp}</p>
                     <p>Pressure: {weatherInfo.pressure}</p>
-                    <p>Sunset: {new Date(weatherInfo.sunset * 1000).toLocaleTimeString()}</p>
+                    <p>Sunset: {new Date(weatherInfo.sunset! * 1000).toLocaleTimeString()}</p>
                 </>
             }
             {message}
