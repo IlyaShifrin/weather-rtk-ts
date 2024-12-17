@@ -1,15 +1,18 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {WeatherInfo} from "../../utils/types";
+import {fetchWeatherInfo} from "../api/weatherInfoAction.ts";
 
 const initialState: WeatherInfo = {};
 
 const weatherInfoSlice = createSlice({
     name: 'weatherInfo',
     initialState: initialState,
-    reducers: {
-        putWeatherInfo: (_state, action) => action.payload
+    reducers: {},
+    extraReducers: builder => {
+        builder
+            .addCase(fetchWeatherInfo.fulfilled, (_state, action) => action.payload)
+            .addCase(fetchWeatherInfo.rejected, () => {console.log('The request was rejected!')})
     }
 })
 
-export const {putWeatherInfo} = weatherInfoSlice.actions;
 export default weatherInfoSlice.reducer;
