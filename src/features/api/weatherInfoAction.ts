@@ -6,6 +6,11 @@ export const fetchWeatherInfo = createAsyncThunk(
     'fetch/weatherInfo',
     async (city: string) => {
         const response = await fetch(`${base_url}?q=${city}&appid=${api_key}&units=metric`);
+
+        // if (!response.ok) {
+        //     throw new Error('Enter correct city');
+        // }
+
         const data = await response.json();
         const res: WeatherInfo = {
             country: data.sys.country,
