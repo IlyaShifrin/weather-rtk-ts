@@ -1,20 +1,21 @@
 import React, {useState} from "react";
-import {fetchWeatherInfo} from "../features/api/weatherInfoAction.ts";
-import {useAppDispatch} from "../app/hooks.ts";
 
-const Form = () => {
-    const [city, setCity] = useState('');
-    const dispatch = useAppDispatch();
+interface Props {
+    setCity: (city: string) => void;
+}
+
+const Form = ({setCity}: Props) => {
+    const [cityName, setCityName] = useState('');
 
     const getCity = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        dispatch(fetchWeatherInfo(city));
-        setCity('');
+        setCity(cityName);
+        setCityName('');
     }
 
     return (
         <form onSubmit={getCity}>
-            <input onChange={e => setCity(e.target.value)} type="text" value={city} />
+            <input onChange={e => setCityName(e.target.value)} type="text" value={cityName} />
             <button type="submit">Get Weather</button>
         </form>
     );
