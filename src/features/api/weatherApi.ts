@@ -1,6 +1,6 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 import {api_key, base_url} from "../../utils/constants.ts";
-import {WeatherResponse} from "../../utils/types";
+import {WeatherInfo, WeatherResponse} from "../../utils/types";
 
 export const weatherApi = createApi({
     baseQuery: fetchBaseQuery({
@@ -8,8 +8,16 @@ export const weatherApi = createApi({
     }),
     reducerPath: 'weatherApi',
     endpoints: builder => ({
-        getWeatherByCity: builder.query<WeatherResponse, string>({
-            query: (city: string) => `?q=${city}&appid=${api_key}&units=metric`
+        getWeatherByCity: builder.query<WeatherInfo, string>({
+            query: (city: string) => `?q=${city}&appid=${api_key}&units=metric`,
+            keepUnusedDataFor: 60*60*5,
+            transformResponse: (response: WeatherResponse) => {
+                return {weatherInfo:
+                    response.name,
+                    ...response.sys,
+                    ...response.main,
+                };
+            }
         })
     })
 })

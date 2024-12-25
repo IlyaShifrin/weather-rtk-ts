@@ -3,7 +3,7 @@ import {useAppSelector} from "../app/hooks.ts";
 
 const Weather = () => {
     const city = useAppSelector(state => state.city);
-    const {data, error, isLoading} = useGetWeatherByCityQuery(city)
+    const {data: weatherInfo, error, isLoading} = useGetWeatherByCityQuery(city)
 
     if (!city) {
         return <div className={'infoWeath'}>Enter city name</div>
@@ -19,12 +19,12 @@ const Weather = () => {
 
     return (
         <div className={'infoWeath'}>
-            {!!data &&
+            {!!weatherInfo &&
                 <> {/*это фрагмент Fragment'*/}
-                    <p>Location: {data.sys.country}, {data.name}</p>
-                    <p>Temp: {data.main.temp}</p>
-                    <p>Pressure: {data.main.pressure}</p>
-                    <p>Sunset: {new Date(data.sys.sunset! * 1000).toLocaleTimeString()}</p>
+                    <p>Location: {weatherInfo.country}, {weatherInfo.city}</p>
+                    <p>Temp: {weatherInfo.temp}</p>
+                    <p>Pressure: {weatherInfo.pressure}</p>
+                    <p>Sunset: {new Date(weatherInfo.sunset! * 1000).toLocaleTimeString()}</p>
                 </>
             }
         </div>
